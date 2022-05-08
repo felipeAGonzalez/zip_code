@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ZipCodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['lang']], function () {
+    Route::group([
+        'prefix' => 'zip-codes',
+    ], function ($router) {
+        Route::get('/{zip_code}', [ZipCodeController::class, 'zipCode']);
+    });
 });
